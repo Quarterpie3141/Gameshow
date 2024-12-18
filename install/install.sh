@@ -60,7 +60,7 @@ echo '#!/sbin/openrc-run' > urcgameshow
 echo 'name="urcgameshow"' >> urcgameshow
 echo 'description="Node.js based webserver for URC Game Show"' >> urcgameshow
 echo 'command="/usr/bin/node"' >> urcgameshow
-echo 'command_args="/opt/Gameshow/server/index.js"' >> urcgameshow
+echo 'command_args="/opt/Gameshow/server/dist/index.js"' >> urcgameshow
 echo 'pidfile="/run/urcgameshow.pid"' >> urcgameshow
 echo 'command_background=true' >> urcgameshow
 echo 'depend() {' >> urcgameshow
