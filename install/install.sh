@@ -2,11 +2,9 @@ set -e
 # redis and other packages are only avalible on the community edge mirrors 
 printf "\n\n\n!!! Enable a community repository or the installation WILL fail !!! \n"
 # need to configure openrc services to have sever start on boot
-printf "!!! Run as root or the installation WILL fail !!! \n\n\n"
+printf "!!! Run as root or the installation might fail !!! \n\n\n"
 sleep 2
 printf "Starting URC gameshow buzzer server installation \n\n"
-
-cd /root #why
 
 printf "Installing Redis\n\n"
 
@@ -37,19 +35,40 @@ apk add chrony
 rc-service chronyd start
 rc-update add chronyd
 
-printf "\n Installing URC Gameshow server\n\n"
+printf "\n Downloading URC Gameshow server\n\n"
 
 apk add git
 # pull the gameshow code from github
+cd /opt
 git clone https://github.com/Quarterpie3141/Gameshow.git
 
 apk del git
 #install node, yarn and download the dependencies
+printf "\n Installing node.js \n\n"
 apk add nodejs
 apk add yarn
 
-cd ./Gameshow/server
+cd /opt/Gameshow/server
 
+printf "\n Installing URC Gameshow server\n\n"
 yarn -i --prod # exclude dev dependencies
 
-node ./dist/index.js
+cd /etc/init.d
+touch urcgameshow
+
+echo '#!/sbin/openrc-run' > urcgameshow
+echo 'name="urcgameshow"' >> urcgameshow
+echo 'description="Node.js based webserver for URC Game Show"' >> urcgameshow
+echo 'command="/usr/bin/node"' >> urcgameshow
+echo 'command_args="/opt/urcgameshow/server/index.js"' >> urcgameshow
+echo 'pidfile="/run/urcgameshow.pid"' >> urcgameshow
+echo 'command_background=true' >> urcgameshow
+echo 'depend() {' >> urcgameshow
+echo '    need net' >> urcgameshow
+echo '}' >> urcgameshow
+
+chmod +x urcgameshow
+
+rc-update add urcgameshow default
+rc-service urcgameshow start
+rc-service urcgameshow status
