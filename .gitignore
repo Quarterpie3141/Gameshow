@@ -1,0 +1,7 @@
+#all of the node_module folders, they will be populated at runtime
+*node_modules
+
+#Vs code workspace configurations 
+.vscode
+
+# auto generated c pico SDK files.
