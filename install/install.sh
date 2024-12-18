@@ -6,6 +6,7 @@ printf "!!! Run as root or the installation WILL fail !!! \n\n\n"
 sleep 2
 printf "Starting URC gameshow buzzer server installation \n\n"
 
+cd /root #why
 
 printf "Installing Redis\n\n"
 
@@ -39,5 +40,17 @@ rc-update add chronyd
 printf "\n Installing URC Gameshow server\n\n"
 
 apk add git
+# pull the gameshow code from github
+git clone https://github.com/Quarterpie3141/Gameshow.git
 
-git clone 
+apk del git
+#install node, yarn and download the dependencies
+apk add nodejs
+apk add yarn
+
+cd ./Gameshow/server
+
+yarn -i --prod # exclude dev dependencies
+
+node ./dist/index.js
+https://raw.githubusercontent.com/Quarterpie3141/Gameshow/refs/heads/master/install/install.sh
