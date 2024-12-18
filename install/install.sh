@@ -53,4 +53,3 @@ cd ./Gameshow/server
 yarn -i --prod # exclude dev dependencies
 
 node ./dist/index.js
-https://raw.githubusercontent.com/Quarterpie3141/Gameshow/refs/heads/master/install/install.sh
