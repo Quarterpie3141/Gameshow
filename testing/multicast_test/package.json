@@ -1,12 +1,12 @@
 {
-  "name": "server",
+  "name": "multicast_test",
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
   "scripts": {
     "build": "tsc",
-    "run": "tsc && node dist/index.js",
-    "dev": "tsc && node dist/index.js | pino-pretty",
+    "run": "tsc && node ./out/index.js",
+    "dev": "tsc && node ./out/index.js | pino-pretty",
     "lint": "biome check ./src",
     "lintfix": "biome check --write ./src"
   },
@@ -14,12 +14,9 @@
     "@biomejs/biome": "1.9.4",
     "@types/express": "^5.0.0",
     "@types/node": "^22.10.2",
-    "@types/pino": "^7.0.5",
     "typescript": "^5.7.2"
   },
   "dependencies": {
-    "dotenv": "^16.4.7",
-    "express": "^4.21.2",
     "pino": "^9.5.0"
   }
 }

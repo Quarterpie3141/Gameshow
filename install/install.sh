@@ -55,16 +55,16 @@ yarn -i --prod # exclude dev dependencies
 
 cd /etc/init.d
 touch urcgameshow
-
+# create the openrc init file so taht it can run as a dameon and start on boot
 echo '#!/sbin/openrc-run' > urcgameshow
 echo 'name="urcgameshow"' >> urcgameshow
-echo 'description="Node.js based webserver for URC Game Show"' >> urcgameshow
+echo 'description="nodejs based webserver for URC Game Show"' >> urcgameshow
 echo 'command="/usr/bin/node"' >> urcgameshow
 echo 'command_args="/opt/Gameshow/server/dist/index.js"' >> urcgameshow
 echo 'pidfile="/run/urcgameshow.pid"' >> urcgameshow
 echo 'command_background=true' >> urcgameshow
 echo 'depend() {' >> urcgameshow
-echo '    need net' >> urcgameshow
+echo '    need net' >> urcgameshow # wait till the network is up before running
 echo '}' >> urcgameshow
 
 chmod +x urcgameshow
