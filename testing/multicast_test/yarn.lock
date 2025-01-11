@@ -140,11 +140,6 @@ atomic-sleep@^1.0.0:
   resolved "https://registry.yarnpkg.com/atomic-sleep/-/atomic-sleep-1.0.0.tgz#eb85b77a601fc932cfe432c5acd364a9e2c9075b"
   integrity sha512-kNOjDqAh7px0XWNI+4QbzoiR/nTkHAWNud2uvnJquD1/x5a7EQZMJT0AczqK0Qn67oY/TTQ1LbUKajZpp3I9tQ==
 
-dgram@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/dgram/-/dgram-1.0.1.tgz#37f3b200f8033a5ff759303089c81ce361b651c3"
-  integrity sha512-zJVFL1EWfKtE0z2VN6qfpn/a+qG1viEzcwJA0EjtzS76ONSE3sEyWBwEbo32hS4IFw/EWVuWN+8b89aPW6It2A==
-
 fast-redact@^3.1.1:
   version "3.5.0"
   resolved "https://registry.yarnpkg.com/fast-redact/-/fast-redact-3.5.0.tgz#e9ea02f7e57d0cd8438180083e93077e496285e4"
