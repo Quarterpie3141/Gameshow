@@ -1,23 +1,20 @@
 import dgram from "node:dgram";
 import os from "node:os";
 import process from "node:process";
-import dotenv from "dotenv";
 import pino from "pino";
 
-dotenv.config({ path: "../../.env" });
-
 const logger = pino();
-let multicastAddress = "233.255.255.255";
+const multicastAddress = process.env.MULTICAST_ADDRESS
+	? process.env.MULTICAST_ADDRESS
+	: "233.255.255.255";
+const multicastPort = process.env.MULTICAST_PORT
+	? Number(process.env.MULTICAST_PORT)
+	: 5000;
 let serverAddress = "0.0.0.0";
-const port = 5000;
 const socket = dgram.createSocket({ type: "udp4", reuseAddr: true });
 
-if (process.env.MULTICAST_ADDRESS) {
-	multicastAddress = process.env.MULTICAST_ADDRESS;
-}
-
 export default function initMulticastHandler() {
-	socket.bind(port);
+	socket.bind(multicastPort);
 
 	socket.on("listening", () => {
 		socket.addMembership(multicastAddress);
@@ -39,9 +36,16 @@ export default function initMulticastHandler() {
 
 	function sendMessage() {
 		const message = Buffer.from(`alternativeIPs: ${getIP()}`);
-		socket.send(message, 0, message.length, port, multicastAddress, () => {
-			logger.info(`Sending message "${message}"`);
-		});
+		socket.send(
+			message,
+			0,
+			message.length,
+			multicastPort,
+			multicastAddress,
+			() => {
+				logger.info(`Sending message "${message}"`);
+			},
+		);
 	}
 
 	function getIP(): string[] {

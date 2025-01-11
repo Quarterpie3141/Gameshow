@@ -7,19 +7,18 @@ exports.default = initMulticastHandler;
 const node_dgram_1 = __importDefault(require("node:dgram"));
 const node_os_1 = __importDefault(require("node:os"));
 const node_process_1 = __importDefault(require("node:process"));
-const dotenv_1 = __importDefault(require("dotenv"));
 const pino_1 = __importDefault(require("pino"));
-dotenv_1.default.config({ path: "../../.env" });
 const logger = (0, pino_1.default)();
-let multicastAddress = "233.255.255.255";
+const multicastAddress = node_process_1.default.env.MULTICAST_ADDRESS
+    ? node_process_1.default.env.MULTICAST_ADDRESS
+    : "233.255.255.255";
+const multicastPort = node_process_1.default.env.MULTICAST_PORT
+    ? Number(node_process_1.default.env.MULTICAST_PORT)
+    : 5000;
 let serverAddress = "0.0.0.0";
-const port = 5000;
 const socket = node_dgram_1.default.createSocket({ type: "udp4", reuseAddr: true });
-if (node_process_1.default.env.MULTICAST_ADDRESS) {
-    multicastAddress = node_process_1.default.env.MULTICAST_ADDRESS;
-}
 function initMulticastHandler() {
-    socket.bind(port);
+    socket.bind(multicastPort);
     socket.on("listening", () => {
         socket.addMembership(multicastAddress);
         const address = socket.address();
@@ -35,8 +34,8 @@ function initMulticastHandler() {
         }
     });
     function sendMessage() {
-        const message = Buffer.from(`serverip: ${getIP()}`);
-        socket.send(message, 0, message.length, port, multicastAddress, () => {
+        const message = Buffer.from(`alternativeIPs: ${getIP()}`);
+        socket.send(message, 0, message.length, multicastPort, multicastAddress, () => {
             logger.info(`Sending message "${message}"`);
         });
     }

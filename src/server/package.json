@@ -5,8 +5,8 @@
   "license": "MIT",
   "scripts": {
     "build": "tsc",
-    "run": "tsc && node dist/index.js",
-    "dev": "tsc && node dist/index.js | pino-pretty",
+    "run": "tsc && node ./dist/server.js",
+    "dev": "tsc && node ./dist/server.js | pino-pretty",
     "lint": "biome check ./src",
     "lintfix": "biome check --write ./src"
   },
@@ -20,6 +20,6 @@
   "dependencies": {
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
-    "pino": "^9.5.0"
+    "pino": "^9.6.0"
   }
 }
